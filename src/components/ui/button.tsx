@@ -18,6 +18,11 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Emergency variants
+        danger: "bg-danger text-danger-foreground hover:bg-danger/90 shadow-sm",
+        warning: "bg-warning text-warning-foreground hover:bg-warning/90 shadow-sm",
+        safe: "bg-safe text-safe-foreground hover:bg-safe/90 shadow-sm",
+        emergency: "bg-gradient-to-r from-danger to-danger/80 text-danger-foreground hover:from-danger/90 hover:to-danger/70 shadow-lg animate-pulse",
       },
       size: {
         default: "h-10 px-4 py-2",

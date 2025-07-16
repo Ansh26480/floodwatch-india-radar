@@ -52,6 +52,30 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Emergency Risk Colors
+				danger: {
+					DEFAULT: 'hsl(var(--danger))',
+					foreground: 'hsl(var(--danger-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				moderate: {
+					DEFAULT: 'hsl(var(--moderate))',
+					foreground: 'hsl(var(--moderate-foreground))'
+				},
+				safe: {
+					DEFAULT: 'hsl(var(--safe))',
+					foreground: 'hsl(var(--safe-foreground))'
+				},
+				// Map & Water Colors
+				water: 'hsl(var(--water))',
+				'water-light': 'hsl(var(--water-light))',
+				'flood-zone': 'hsl(var(--flood-zone))',
+				'affected-area': 'hsl(var(--affected-area))',
+				historical: 'hsl(var(--historical))',
+				prediction: 'hsl(var(--prediction))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
