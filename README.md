@@ -1,73 +1,138 @@
-# Welcome to your Lovable project
+# FloodWatch India Radar 🌊
 
-## Project info
+A real-time flood monitoring and emergency response system for India, providing critical flood data, alerts, and evacuation assistance to citizens and emergency responders.
 
-**URL**: https://lovable.dev/projects/423deaed-4ef6-4d90-8a7d-c785e1fb211a
+## 🚀 Features
 
-## How can I edit this code?
+- **Real-time Flood Monitoring**: Live data from flood sensors across India
+- **Interactive Map**: Dynamic mapping with flood zones, affected areas, and evacuation routes
+- **Emergency Alerts**: Instant notifications for flood warnings and safety updates
+- **Dual Interface**: Separate views for citizens and emergency responders
+- **Weather Integration**: Current weather and forecast data from IMD and OpenWeather
+- **Emergency Contacts**: Quick access to local emergency services
+- **Evacuation Routes**: AI-powered evacuation route suggestions
+- **Historical Data**: Access to past flood data for better preparedness
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Library**: shadcn/ui, Tailwind CSS
+- **Mapping**: Leaflet, React-Leaflet
+- **Backend**: Supabase (PostgreSQL, Real-time subscriptions)
+- **APIs**: OpenWeather API, India Meteorological Department
+- **State Management**: TanStack Query
+- **Authentication**: Supabase Auth
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/423deaed-4ef6-4d90-8a7d-c785e1fb211a) and start prompting.
+## 🚦 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v18 or higher) or Bun
+- Git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. **Clone the repository**
+```bash
+git clone https://github.com/Ansh26480/floodwatch-india-radar.git
+cd floodwatch-india-radar
 ```
 
-**Edit a file directly in GitHub**
+2. **Install dependencies**
+```bash
+# Using npm
+npm install
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Or using bun
+bun install
+```
 
-**Use GitHub Codespaces**
+3. **Set up environment variables**
+```bash
+cp .env.example .env
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Edit `.env` and add your API keys:
+- Get OpenWeather API key from [OpenWeatherMap](https://openweathermap.org/api)
+- Get Mapbox token from [Mapbox](https://www.mapbox.com/)
+- Supabase credentials are already configured
 
-## What technologies are used for this project?
+4. **Start the development server**
+```bash
+# Using npm
+npm run dev
 
-This project is built with:
+# Or using bun
+bun run dev
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+5. **Open your browser**
+Navigate to `http://localhost:5173`
 
-## How can I deploy this project?
+## 🌐 Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/423deaed-4ef6-4d90-8a7d-c785e1fb211a) and click on Share -> Publish.
+### Lovable Platform (Recommended)
+This project is configured for deployment on [Lovable](https://lovable.dev). Simply:
+1. Visit your [Lovable Project](https://lovable.dev/projects/423deaed-4ef6-4d90-8a7d-c785e1fb211a)
+2. Click Share → Publish
+3. Your app will be live!
 
-## Can I connect a custom domain to my Lovable project?
+### Manual Deployment
+```bash
+npm run build
+# Deploy the dist/ folder to your hosting platform
+```
 
-Yes, you can!
+## 📱 Usage
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### For Citizens
+- View real-time flood conditions in your area
+- Receive emergency alerts and warnings
+- Find safe evacuation routes
+- Access emergency contact numbers
+- Report flood incidents with photos
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### For Emergency Responders
+- Monitor multiple flood sensors simultaneously
+- Manage evacuation operations
+- Coordinate emergency response
+- Access detailed analytics and reports
+- Update alert systems
+
+## 🗺️ API Integrations
+
+- **OpenWeather API**: Weather data and forecasts
+- **India Meteorological Department**: Official weather bulletins
+- **Supabase**: Real-time database and authentication
+- **Emergency Services API**: Local emergency contacts
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Emergency Contacts
+
+- **National Emergency**: 112
+- **Fire Brigade**: 101
+- **Police**: 100
+- **Ambulance**: 108
+- **Disaster Management**: 1077
+
+## 🙏 Acknowledgments
+
+- India Meteorological Department for weather data
+- National Disaster Management Authority
+- OpenStreetMap contributors
+- All emergency responders keeping India safe
+
+---
+
+**⚡ Built with ❤️ for India's safety and disaster preparedness**

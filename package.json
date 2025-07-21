@@ -1,8 +1,15 @@
 {
-  "name": "vite_react_shadcn_ts",
-  "private": true,
-  "version": "0.0.0",
+  "name": "floodwatch-india-radar",
+  "description": "Real-time flood monitoring and emergency response system for India",
+  "version": "1.0.0",
   "type": "module",
+  "keywords": ["flood", "monitoring", "emergency", "india", "disaster-management"],
+  "author": "Ansh26480",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ansh26480/floodwatch-india-radar.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -60,7 +67,11 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.2.1",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -79,6 +90,7 @@
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "@types/leaflet": "^1.9.12"
   }
 }
