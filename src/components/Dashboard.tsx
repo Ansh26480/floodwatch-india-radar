@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Header } from "./Header";
-import { MapView } from "./MapView";
+import { FloodMapView } from "./FloodMapView";
 import { RiskPanel } from "./RiskPanel";
 
 export function Dashboard() {
@@ -16,7 +16,7 @@ export function Dashboard() {
         {/* Map Section - Left side */}
         <div className="flex-1 p-4">
           <div className="h-full rounded-lg overflow-hidden shadow-lg border">
-            <MapView />
+            <FloodMapView />
           </div>
         </div>
         
