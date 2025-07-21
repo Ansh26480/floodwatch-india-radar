@@ -111,7 +111,7 @@ export function MapView() {
           i < count ? 'text-warning' : 'text-muted-foreground'
         }`}
       >
-        ★
+        *
       </span>
     ));
   };

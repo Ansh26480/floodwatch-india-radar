@@ -32,14 +32,26 @@ export function useFloodSensors(district?: string) {
     fetchSensors();
 
     // Subscribe to real-time updates
-    const unsubscribe = FloodSensorService.subscribeToSensorUpdates(
-      (updatedSensors) => {
-        setSensors(updatedSensors);
-      },
-      district
-    );
+    const subscribeToUpdates = async () => {
+      const unsubscribe = await FloodSensorService.subscribeToSensorUpdates(
+        (updatedSensors) => {
+          setSensors(updatedSensors);
+        },
+        district
+      );
+      return unsubscribe;
+    };
 
-    return unsubscribe;
+    let unsubscribePromise: Promise<() => void> | null = null;
+    subscribeToUpdates().then(unsub => {
+      if (unsub) unsubscribePromise = Promise.resolve(unsub);
+    });
+
+    return () => {
+      if (unsubscribePromise) {
+        unsubscribePromise.then(unsub => unsub());
+      }
+    };
   }, [district]);
 
   return { sensors, loading, error, refetch: () => {
@@ -77,14 +89,26 @@ export function useFloodAlerts(district?: string) {
     fetchAlerts();
 
     // Subscribe to real-time updates
-    const unsubscribe = FloodAlertService.subscribeToAlertUpdates(
-      (updatedAlerts) => {
-        setAlerts(updatedAlerts);
-      },
-      district
-    );
+    const subscribeToUpdates = async () => {
+      const unsubscribe = await FloodAlertService.subscribeToAlertUpdates(
+        (updatedAlerts) => {
+          setAlerts(updatedAlerts);
+        },
+        district
+      );
+      return unsubscribe;
+    };
 
-    return unsubscribe;
+    let unsubscribePromise: Promise<() => void> | null = null;
+    subscribeToUpdates().then(unsub => {
+      if (unsub) unsubscribePromise = Promise.resolve(unsub);
+    });
+
+    return () => {
+      if (unsubscribePromise) {
+        unsubscribePromise.then(unsub => unsub());
+      }
+    };
   }, [district]);
 
   return { alerts, loading, error, refetch: () => {

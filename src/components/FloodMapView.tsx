@@ -34,7 +34,7 @@ const createCustomIcon = (riskLevel: string) => {
         <path fill="${color}" stroke="#fff" stroke-width="2" d="M12.5 0C5.6 0 0 5.6 0 12.5c0 10.9 12.5 28.5 12.5 28.5S25 23.4 25 12.5C25 5.6 19.4 0 12.5 0z"/>
         <circle fill="#fff" cx="12.5" cy="12.5" r="7"/>
         <text x="12.5" y="17" text-anchor="middle" font-size="10" font-weight="bold" fill="${color}">
-          ${riskLevel === 'danger' ? '!' : riskLevel === 'moderate' ? '⚠' : '✓'}
+          ${riskLevel === 'danger' ? '!' : riskLevel === 'moderate' ? '!' : 'OK'}
         </text>
       </svg>
     `)}`,
