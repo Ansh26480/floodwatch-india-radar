@@ -259,68 +259,77 @@ export function FloodMapView() {
       <div className="absolute top-4 left-4 z-[1000]">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="secondary" size="sm" className="shadow-lg">
-              <Layers className="h-4 w-4 mr-2" />
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              className="shadow-lg hover:shadow-xl transition-all duration-200 bg-white/90 backdrop-blur-sm border-0 hover:bg-white/95 hover:scale-105"
+            >
+              <Layers className="h-4 w-4 mr-2 text-blue-600" />
               Map Layers
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64">
+          <PopoverContent className="w-72 border-0 shadow-2xl bg-white/95 backdrop-blur-md">
             <div className="space-y-4">
-              <h4 className="font-medium text-sm">Flood Information Layers</h4>
+              <h4 className="font-semibold text-sm bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Flood Information Layers</h4>
               <div className="space-y-3">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors duration-150">
                   <Checkbox 
                     id="affected-areas" 
                     checked={layers.affectedAreas}
                     onCheckedChange={() => toggleLayer('affectedAreas')}
+                    className="border-red-300 data-[state=checked]:bg-red-500"
                   />
-                  <label htmlFor="affected-areas" className="text-sm flex items-center gap-2">
-                    <div className="w-3 h-3 bg-red-500 rounded opacity-50"></div>
-                    Flood-Affected Areas
+                  <label htmlFor="affected-areas" className="text-sm flex items-center gap-2 cursor-pointer flex-1">
+                    <div className="w-3 h-3 bg-red-500 rounded opacity-60 animate-pulse"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Flood-Affected Areas</span>
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-colors duration-150">
                   <Checkbox 
                     id="flood-depth" 
                     checked={layers.floodDepth}
                     onCheckedChange={() => toggleLayer('floodDepth')}
+                    className="border-blue-300 data-[state=checked]:bg-blue-500"
                   />
-                  <label htmlFor="flood-depth" className="text-sm flex items-center gap-2">
+                  <label htmlFor="flood-depth" className="text-sm flex items-center gap-2 cursor-pointer flex-1">
                     <Droplets className="w-3 h-3 text-blue-500" />
-                    Water Depth Indicators
+                    <span className="text-gray-700 dark:text-gray-300">Water Depth Indicators</span>
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-colors duration-150">
                   <Checkbox 
                     id="evacuation-routes" 
                     checked={layers.evacuationRoutes}
                     onCheckedChange={() => toggleLayer('evacuationRoutes')}
+                    className="border-green-300 data-[state=checked]:bg-green-500"
                   />
-                  <label htmlFor="evacuation-routes" className="text-sm flex items-center gap-2">
+                  <label htmlFor="evacuation-routes" className="text-sm flex items-center gap-2 cursor-pointer flex-1">
                     <Navigation className="w-3 h-3 text-green-500" />
-                    Evacuation Routes
+                    <span className="text-gray-700 dark:text-gray-300">Evacuation Routes</span>
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-colors duration-150">
                   <Checkbox 
                     id="danger-zones" 
                     checked={layers.dangerZones}
                     onCheckedChange={() => toggleLayer('dangerZones')}
+                    className="border-amber-300 data-[state=checked]:bg-amber-500"
                   />
-                  <label htmlFor="danger-zones" className="text-sm flex items-center gap-2">
-                    <AlertTriangle className="w-3 h-3 text-red-500" />
-                    High-Risk Zones
+                  <label htmlFor="danger-zones" className="text-sm flex items-center gap-2 cursor-pointer flex-1">
+                    <AlertTriangle className="w-3 h-3 text-amber-500" />
+                    <span className="text-gray-700 dark:text-gray-300">High-Risk Zones</span>
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-yellow-50 dark:hover:bg-yellow-950/20 transition-colors duration-150">
                   <Checkbox 
                     id="prediction-zones" 
                     checked={layers.predictionZones}
                     onCheckedChange={() => toggleLayer('predictionZones')}
+                    className="border-yellow-300 data-[state=checked]:bg-yellow-500"
                   />
-                  <label htmlFor="prediction-zones" className="text-sm flex items-center gap-2">
+                  <label htmlFor="prediction-zones" className="text-sm flex items-center gap-2 cursor-pointer flex-1">
                     <TrendingUp className="w-3 h-3 text-yellow-500" />
-                    Flood Predictions
+                    <span className="text-gray-700 dark:text-gray-300">Flood Predictions</span>
                   </label>
                 </div>
               </div>
@@ -331,8 +340,36 @@ export function FloodMapView() {
 
       {/* Map Controls */}
       <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
-        <Button variant="secondary" size="icon" className="h-9 w-9 shadow-lg">
-          <Shield className="h-4 w-4" />
+        <Button 
+          variant="secondary" 
+          size="icon" 
+          className="h-10 w-10 shadow-lg hover:shadow-xl transition-all duration-200 bg-white/90 backdrop-blur-sm border-0 hover:bg-white/95 hover:scale-105"
+          onClick={() => {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition((position) => {
+                setUserLocation([position.coords.latitude, position.coords.longitude]);
+              });
+            }
+          }}
+          title="Center on my location"
+        >
+          <Navigation className="h-4 w-4 text-blue-600" />
+        </Button>
+        <Button 
+          variant="secondary" 
+          size="icon" 
+          className="h-10 w-10 shadow-lg hover:shadow-xl transition-all duration-200 bg-white/90 backdrop-blur-sm border-0 hover:bg-white/95 hover:scale-105"
+          title="Emergency Services"
+        >
+          <Shield className="h-4 w-4 text-red-600" />
+        </Button>
+        <Button 
+          variant="secondary" 
+          size="icon" 
+          className="h-10 w-10 shadow-lg hover:shadow-xl transition-all duration-200 bg-white/90 backdrop-blur-sm border-0 hover:bg-white/95 hover:scale-105"
+          title="Live Updates"
+        >
+          <Zap className="h-4 w-4 text-yellow-600 animate-pulse" />
         </Button>
       </div>
 

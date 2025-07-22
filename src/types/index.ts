@@ -52,10 +52,13 @@ export interface EmergencyContact {
   phone: string;
   email?: string;
   department: string;
-  designation: string;
-  district: string;
+  designation?: string;
+  district?: string;
   state: string;
-  isAvailable: boolean;
+  level?: 'national' | 'state' | 'district' | 'local';
+  priority?: number;
+  is_active?: boolean;
+  isAvailable?: boolean;
 }
 
 export interface EvacuationRoute {

@@ -3,7 +3,10 @@ import { FloodSensor, FloodAlert, EmergencyContact } from '@/types';
 import { 
   FloodSensorService, 
   FloodAlertService, 
-  EmergencyContactService 
+  EmergencyContactService,
+  StatisticsService,
+  NotificationService,
+  LocationService
 } from '@/integrations/supabase/services';
 
 // Hook for real-time flood sensors
@@ -120,35 +123,6 @@ export function useFloodAlerts(district?: string) {
   }};
 }
 
-// Hook for emergency contacts
-export function useEmergencyContacts(district: string, state: string) {
-  const [contacts, setContacts] = useState<EmergencyContact[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        setLoading(true);
-        const data = await EmergencyContactService.getEmergencyContacts(district, state);
-        setContacts(data);
-        setError(null);
-      } catch (err) {
-        setError('Failed to fetch emergency contacts');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (district && state) {
-      fetchContacts();
-    }
-  }, [district, state]);
-
-  return { contacts, loading, error };
-}
-
 // Hook for user location with geolocation
 export function useUserLocation() {
   const [location, setLocation] = useState<{
@@ -173,17 +147,25 @@ export function useUserLocation() {
           try {
             const { latitude, longitude } = position.coords;
             
-            // Try to get location details from reverse geocoding
-            // For now, default to Mumbai if we can't determine the exact location
+            // Try to get location details from reverse geocoding API
+            const locationDetails = await LocationService.getLocationFromCoordinates(latitude, longitude);
+            
             setLocation({
               latitude,
               longitude,
-              district: 'Mumbai', // This should be determined from reverse geocoding
-              state: 'Maharashtra'
+              district: locationDetails.district,
+              state: locationDetails.state
             });
             setError(null);
           } catch (err) {
-            setError('Failed to get location details');
+            // Fallback: Set coordinates without district/state info
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              district: 'Unknown District',
+              state: 'Unknown State'
+            });
+            setError('Could not determine exact location details');
           } finally {
             setLoading(false);
           }
@@ -247,4 +229,130 @@ export function useDashboardData(userLocation?: { district: string; state: strin
     stats,
     loading
   };
+}
+
+// Hook for emergency contacts with enhanced functionality
+export function useEmergencyContacts(district?: string, state?: string) {
+  const [contacts, setContacts] = useState<EmergencyContact[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        setLoading(true);
+        let data: EmergencyContact[] = [];
+
+        if (state) {
+          // Get state-specific contacts
+          data = await EmergencyContactService.getContactsByState(state);
+        } else {
+          // Get all contacts
+          data = await EmergencyContactService.getAllContacts();
+        }
+
+        // Always include national emergency contacts at the top
+        const nationalContacts = await EmergencyContactService.getNationalEmergencyContacts();
+        
+        // Combine and deduplicate
+        const allContacts = [...nationalContacts, ...data];
+        const uniqueContacts = allContacts.filter((contact, index, self) => 
+          index === self.findIndex(c => c.phone === contact.phone)
+        );
+
+        setContacts(uniqueContacts);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch emergency contacts');
+        console.error(err);
+        
+        // Fallback to hardcoded emergency contacts
+        setContacts([
+          {
+            id: '1',
+            name: 'Emergency Helpline',
+            phone: '112',
+            department: 'National Emergency',
+            level: 'national',
+            state: 'All India',
+            priority: 1,
+            is_active: true
+          },
+          {
+            id: '2',
+            name: 'Police',
+            phone: '100',
+            department: 'Police',
+            level: 'national',
+            state: 'All India',
+            priority: 2,
+            is_active: true
+          },
+          {
+            id: '3',
+            name: 'Fire Brigade',
+            phone: '101',
+            department: 'Fire Services',
+            level: 'national',
+            state: 'All India',
+            priority: 3,
+            is_active: true
+          },
+          {
+            id: '4',
+            name: 'Ambulance',
+            phone: '108',
+            department: 'Medical Emergency',
+            level: 'national',
+            state: 'All India',
+            priority: 4,
+            is_active: true
+          }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContacts();
+  }, [district, state]);
+
+  return { contacts, loading, error };
+}
+
+// Hook for dashboard statistics
+export function useDashboardStats() {
+  const [stats, setStats] = useState({
+    totalSensors: 0,
+    activeSensors: 0,
+    dangerZones: 0,
+    activeAlerts: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const data = await StatisticsService.getDashboardStats();
+        setStats(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch statistics');
+        console.error(err);
+        // Keep default values on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+
+    // Refresh stats every 30 seconds
+    const interval = setInterval(fetchStats, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return { stats, loading, error };
 }
